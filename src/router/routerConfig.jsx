@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Root from "../components/layouts/Root";
 import Home from "../pages/home/Home";
+import AllNews from "../pages/home/all-newss/AllNewses";
 
 const router = createBrowserRouter([
     {
@@ -9,7 +10,14 @@ const router = createBrowserRouter([
         children: [
             {
                 path: '/',
-                element: <Home></Home>
+                element: <Home></Home>,
+                children: [
+                    {
+                        path: '/',
+                        element: <AllNews></AllNews>,
+                        loader: () => fetch('https://dev.to/api/articles'),
+                    }
+                ]
             }
         ]
     },

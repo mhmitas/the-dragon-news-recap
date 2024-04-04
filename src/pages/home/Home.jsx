@@ -1,14 +1,14 @@
 import React from 'react';
-import Heading3 from '../../components/shared/heading-3xl/Heading3';
 import Header from '../../components/shared/header/Header';
 import Navbar from '../../components/shared/navbar/Navbar';
 import LeftSideContent from '../../components/shared/left-side-content/LeftSideContent';
 import RightSideContent from '../../components/shared/right-side-content/RightSideContent';
 import BreakingNews from './BreakingNews';
+import { Outlet } from 'react-router-dom';
 
 const Home = () => {
     return (
-        <div>
+        <div className=''>
             <div className='text-center mb-20'>
                 <Header></Header>
                 <BreakingNews></BreakingNews>
@@ -16,12 +16,15 @@ const Home = () => {
             </div>
 
             <div className='grid grid-cols-1 md:grid-cols-4 gap-6'>
+                {/* Left side */}
                 <div className=''>
                     <LeftSideContent></LeftSideContent>
                 </div>
-                <div className='md:col-span-2 border'>
-                    <Heading3 h3="news coming soon" />
+                {/* /main container */}
+                <div className='md:col-span-3 lg:col-span-2'>
+                    <Outlet></Outlet>
                 </div>
+                {/* Right side */}
                 <div className=''>
                     <RightSideContent></RightSideContent>
                 </div>

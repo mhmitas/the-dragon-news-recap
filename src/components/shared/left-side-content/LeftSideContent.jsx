@@ -11,16 +11,26 @@ const LeftSideContent = () => {
     }, [])
 
     return (
-        <div>
-            <h3 className='font-bold py-4 px-2 text-xl'>All categories {categories.length}</h3>
-            <div className='ml-4 menu'>
+        <div className='flex justify-between items-center md:block'>
+            <h3 className='font-bold py-4 px-2 text-xl'>Total categories: {categories.length}</h3>
+            <div className='hidden md:block'>
                 {
-                    categories.map(category => <NavLink
-                        className='block p-4 text-xl'
+                    categories.map(category => <div
+                        className='block p-4 text-xl hover:bg-base-300 rounded-xl'
                         key={category.id}
-                        to={`category/${category.id}`}
-                    >{category.name}</NavLink>)
+                    >{category.name}</div>)
                 }
+            </div>
+            <div className='block md:hidden'>
+                <select className='bg-base-200 p-4' name="short-list" id="short-list">
+                    <option value="volvo" hidden>News by category</option>
+                    {
+                        categories.map(category => <option
+                            className=''
+                            key={category.id}
+                        >{category.name}</option>)
+                    }
+                </select>
             </div>
         </div>
     );
