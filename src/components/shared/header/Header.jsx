@@ -1,10 +1,14 @@
-import React from 'react';
-import Heading3 from '../heading-3xl/Heading3';
+import logo from '../../../assets/logo.png'
+import moment from 'moment';
 
 const Header = () => {
     return (
-        <div>
-            <Heading3 h3="Header"></Heading3>
+        <div className='flex flex-col items-center justify-center my-4 space-y-2'>
+            <div className='bg-slate-300 rounded-lg w-full flex justify-center p-4'>
+                <img src={logo} alt="" />
+            </div>
+            <p>Journalism Without Fear or Favour</p>
+            <p className='text-xl'>{moment().format("dddd, MMMM D, YYYY")}</p>
         </div>
     );
 };
