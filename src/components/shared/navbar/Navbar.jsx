@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import userDefault from '../../../assets/user.png'
 import { Link, NavLink } from 'react-router-dom';
+import { AuthContext } from '../../../provider/AuthProvider';
 
 const Navbar = () => {
+    const { user, logOut, loading } = useContext(AuthContext)
+
+    function handleSignOut() {
+        logOut()
+            .then(result => console.log(result))
+            .error(error => console.error(error))
+    }
 
     const navlinks = <>
         <li><NavLink to='/'>Home</NavLink></li>
@@ -22,23 +30,43 @@ const Navbar = () => {
                             {navlinks}
                         </ul>
                     </div>
-                    <a className="btn btn-ghost text-xl">The Dragon News</a>
+                    <Link to="/" className="btn btn-ghost text-xl">The Dragon News</Link>
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">
                         {navlinks}
                     </ul>
                 </div>
-                <div className="navbar-end flex gap-2 mr-4">
-                    <div tabIndex="0" role="button" className="btn btn-ghost btn-circle avatar">
-                        <div className="w-10 rounded-full">
-                            <img alt="Tailwind CSS Navbar component" src={userDefault} />
+                {
+                    loading ?
+                        <div className='navbar-end'>
+                            <span className="loading loading-bars loading-lg"></span>
                         </div>
-                    </div>
-                    <Link to="/login">
-                        <button className="btn btn-primary">Login</button>
-                    </Link>
-                </div>
+                        :
+                        <div className="navbar-end flex gap-2 mr-4">
+
+                            {/* //Login logOut */}
+                            <div tabIndex="0" role="button" className="btn btn-ghost btn-circle avatar">
+                                <div className="w-10 rounded-full">
+                                    <img alt="Tailwind CSS Navbar component" src={userDefault} />
+                                </div>
+                            </div>
+                            {
+                                user ?
+                                    <>
+                                        <span>{user.email}</span>
+                                        <button
+                                            onClick={handleSignOut}
+                                            className="btn btn-primary"
+                                        >Sign out</button>
+                                    </>
+                                    :
+                                    <Link to="/login">
+                                        <button className="btn btn-primary">Login</button>
+                                    </Link>
+                            }
+                        </div>
+                }
             </div>
         </div>
     );

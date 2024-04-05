@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import Navbar from '../../components/shared/navbar/Navbar';
-import { FaGithub, FaGoogle } from "react-icons/fa";
+// import { FaGithub, FaGoogle } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../provider/AuthProvider';
 
@@ -20,8 +20,8 @@ const Register = () => {
         registerUser(email, password)
             .then(result => {
                 console.log(result);
+                e.target.reset()
             }).catch(error => setRegisterError(error.message))
-        e.target.reset()
     }
     return (
         <div>
