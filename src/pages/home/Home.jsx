@@ -25,7 +25,7 @@ const Home = () => {
                     <Outlet></Outlet>
                 </div>
                 {/* Right side */}
-                <div className=''>
+                <div className='hidden md:block'>
                     <RightSideContent></RightSideContent>
                 </div>
             </div>
