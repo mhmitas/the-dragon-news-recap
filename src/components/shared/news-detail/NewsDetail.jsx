@@ -5,7 +5,7 @@ import Navbar from '../navbar/Navbar';
 
 const NewsDetail = () => {
     const news = useLoaderData()
-    console.log(news);
+    // console.log(news);
     const { cover_image, title, description, readable_publish_date, url, body_markdown, body_html } = news
 
     return (
@@ -16,13 +16,13 @@ const NewsDetail = () => {
                 <figure><img src={cover_image} alt="Album" /></figure>
                 <div className="card-body">
                     <h2 className="card-title">{title}</h2>
-                    <p>{description}</p>
-                    <p>
+                    {/* <p>{description}</p> */}
+                    <div>
                         {parse(`${body_html}`)}
                         {/* {
                             body_html
                         } */}
-                    </p>
+                    </div>
                 </div>
             </div>
         </div>

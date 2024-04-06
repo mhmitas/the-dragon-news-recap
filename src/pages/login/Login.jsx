@@ -3,15 +3,16 @@ import Navbar from '../../components/shared/navbar/Navbar';
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../provider/AuthProvider';
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom';
+import { GoogleAuthProvider } from 'firebase/auth';
 
 
 const Login = () => {
 
-    const { signInUser } = useContext(AuthContext)
+    const { signInUser, logInWithPopup } = useContext(AuthContext)
+    const googleProvider = new GoogleAuthProvider()
 
     const location = useLocation()
-    console.log(location);
     const navigate = useNavigate()
 
     function handleLogIn(e) {
@@ -23,8 +24,16 @@ const Login = () => {
             .then((result) => {
                 console.log(result.user);
                 e.target.reset()
-                location.state && navigate(location.state)
+                location.state ? navigate(location.state) : navigate('/')
             }).catch(error => console.log(error.message))
+    }
+    function signInWithGoogle() {
+        logInWithPopup(googleProvider)
+            .then(r => {
+                console.log(r.user);
+                location.state ? navigate(location.state) : navigate('/')
+            }).catch(e => console.error(e))
+
     }
 
     return (
@@ -56,12 +65,14 @@ const Login = () => {
                             <p>Don't have an account! Please <Link to="/register" className='text-primary'><b>Register</b></Link></p>
                         </form>
                         <p className='text-center'>------------- or -------------</p>
-                        <div className='flex text-3xl justify-center gap-6 '>
-                            <button className='btn-btn' >
-                                <FaGoogle />
+                        <div className='flex flex-col gap-2 text-3xl justify-center'>
+                            <button onClick={signInWithGoogle} className="btn btn-outline w-full">
+                                <FaGoogle className='text-xl' />
+                                <span>Continue with Google</span>
                             </button>
-                            <button className='btn-btn' >
-                                <FaGithub />
+                            <button className="btn btn-outline w-full">
+                                <FaGithub className='text-xl' />
+                                <span>Continue with Github</span>
                             </button>
                         </div>
                     </div>

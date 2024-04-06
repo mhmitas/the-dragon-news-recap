@@ -1,15 +1,20 @@
 import React, { useContext } from 'react';
 import userDefault from '../../../assets/user.png'
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../provider/AuthProvider';
 
 const Navbar = () => {
     const { user, logOut, loading } = useContext(AuthContext)
 
+    const navigate = useNavigate()
     function handleSignOut() {
         logOut()
-            .then(result => console.log(result))
-            .error(error => console.error(error))
+            .then(() => {
+                console.log('Sign-out successful.');
+                navigate('/')
+
+            }).catch(error => console.error(error))
+
     }
 
     const navlinks = <>
@@ -46,15 +51,22 @@ const Navbar = () => {
                         <div className="navbar-end flex gap-2 mr-4">
 
                             {/* //Login logOut */}
-                            <div tabIndex="0" role="button" className="btn btn-ghost btn-circle avatar">
-                                <div className="w-10 rounded-full">
-                                    <img alt="Tailwind CSS Navbar component" src={userDefault} />
-                                </div>
-                            </div>
                             {
                                 user ?
                                     <>
-                                        <span>{user.email}</span>
+                                        {
+                                            user.photoURL ?
+                                                <img className="w-10 rounded-full border-2 border-secondary" src={`${user.photoURL}`} alt="" />
+                                                :
+                                                <>
+                                                    <div tabIndex="0" role="button" className="btn btn-ghost btn-circle avatar">
+                                                        <div className="w-10 rounded-full">
+                                                            <img alt="Tailwind CSS Navbar component" src={userDefault} />
+                                                        </div>
+                                                    </div>
+                                                    <p> {user.email}</p>
+                                                </>
+                                        }
                                         <button
                                             onClick={handleSignOut}
                                             className="btn btn-primary"

@@ -1,39 +1,56 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FaFacebook, FaGithub, FaGoogle, FaInstagram, FaTwitter } from "react-icons/fa";
 import QZone from '../q-zone/QZone';
 import qzone1 from '../../../assets/qZone1.png';
 import qzone2 from '../../../assets/qZone2.png';
 import qzone3 from '../../../assets/qZone3.png';
+import { AuthContext } from '../../../provider/AuthProvider';
+import { Link } from 'react-router-dom';
+import { GoogleAuthProvider } from 'firebase/auth';
 
 const RightSideContent = () => {
+    const { user, logInWithPopup } = useContext(AuthContext)
+    const googleProvider = new GoogleAuthProvider()
+    // console.log(user);
+    function signInWithGoogle() {
+        logInWithPopup(googleProvider)
+            .then((result) => {
+                console.log(result.user);
+                location.state ? navigate(location.state) : navigate('/')
+            }).catch(error => console.log(error.message))
+    }
+
     return (
         <div className='flex flex-col gap-3'>
-            <div className='space-y-2 mb-6'>
-                <h3 className='text-2xl'>Login with</h3>
-                <button className="btn btn-outline w-full">
-                    <FaGoogle className='text-xl' />
-                    Google
-                </button>
-                <button className="btn btn-outline w-full">
-                    <FaGithub className='text-xl' />
-                    Github
-                </button>
-            </div>
+            {
+                user ? "" : <div className='space-y-2 mb-6'>
+                    <h3 className='text-2xl'>Login with</h3>
+                    <button onClick={signInWithGoogle} className="btn btn-outline w-full">
+                        <FaGoogle className='text-xl' />
+                        Google
+                    </button>
+                    <button className="btn btn-outline w-full">
+                        <FaGithub className='text-xl' />
+                        Github
+                    </button>
+                </div>
+            }
+
             <div className='space-y-2 mb-6'>
                 <h3 className='text-2xl'>Find Us On</h3>
                 <div className="border border-b-0 rounded-md *:rounded-md *:border-b">
-                    <a href="" className='p-4 flex items-center gap-4'>
+                    <Link href="" className='p-4 flex items-center gap-4'>
                         <FaFacebook className='text-2xl'></FaFacebook>
                         <span>Facebook</span>
-                    </a>
-                    <a href="" className='p-4 flex items-center gap-4'>
+                    </Link>
+                    <Link href="" className='p-4 flex items-center gap-4'>
                         <FaTwitter className='text-2xl'></FaTwitter>
                         <span>Facebook</span>
-                    </a>
-                    <a href="" className='p-4 flex items-center gap-4'>
+                    </Link>
+                    <Link href="" className='p-4 flex items-center gap-4'>
                         <FaInstagram className='text-2xl'></FaInstagram>
                         <span>Facebook</span>
-                    </a>
+                    </Link>
                 </div>
             </div>
             {/* // Q-Zone */}
