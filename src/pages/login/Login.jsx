@@ -3,11 +3,16 @@ import Navbar from '../../components/shared/navbar/Navbar';
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../provider/AuthProvider';
+import { useLocation, useNavigate } from 'react-router-dom'
 
 
 const Login = () => {
 
     const { signInUser } = useContext(AuthContext)
+
+    const location = useLocation()
+    console.log(location);
+    const navigate = useNavigate()
 
     function handleLogIn(e) {
         e.preventDefault();
@@ -18,6 +23,7 @@ const Login = () => {
             .then((result) => {
                 console.log(result.user);
                 e.target.reset()
+                location.state && navigate(location.state)
             }).catch(error => console.log(error.message))
     }
 

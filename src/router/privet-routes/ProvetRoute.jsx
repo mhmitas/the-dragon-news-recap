@@ -8,7 +8,7 @@ const ProvetRoute = ({ children }) => {
     const { user, loading } = useContext(AuthContext)
 
     const location = useLocation()
-    console.log(location);
+    // console.log(location);
 
     if (loading) {
         return (
@@ -20,7 +20,7 @@ const ProvetRoute = ({ children }) => {
     if (user) {
         return children
     }
-    return <Navigate to="/login"></Navigate>
+    return <Navigate state={location.pathname} to="/login"></Navigate>
 };
 
 export default ProvetRoute;

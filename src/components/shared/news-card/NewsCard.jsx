@@ -13,6 +13,7 @@ const NewsCard = ({ news }) => {
                         </div>
                     }
                     <div className="card-body">
+                        <span><b>Published:</b> {readable_publish_date}</span>
                         {/* <h3 className='card-title'>
                     <a href={url} target='_blank'>{title}</a>
                 </h3> */}

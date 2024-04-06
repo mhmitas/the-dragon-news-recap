@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLoaderData } from 'react-router-dom';
-import Header from '../header/Header'
+import parse from 'html-react-parser';
 import Navbar from '../navbar/Navbar';
 
 const NewsDetail = () => {
@@ -18,7 +18,10 @@ const NewsDetail = () => {
                     <h2 className="card-title">{title}</h2>
                     <p>{description}</p>
                     <p>
-                        {body_html}
+                        {parse(`${body_html}`)}
+                        {/* {
+                            body_html
+                        } */}
                     </p>
                 </div>
             </div>
